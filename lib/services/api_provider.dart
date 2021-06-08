@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:login_api/api.dart';
 import 'package:login_api/responses/all_posts_response.dart';
 import 'package:login_api/responses/all_users_response.dart';
 import 'package:login_api/responses/post_comments_response.dart';
 import 'package:login_api/responses/post_response.dart';
 import 'package:login_api/responses/user_response.dart';
+import 'package:login_api/services/api.dart';
 
 class ApiProvider extends ChangeNotifier {
   AllUsersResponse allUsersResponse;
+  List<User> users = [];
   UserResponse userResponse;
   AllPostsResponse allPostsResponse;
   PostResponse postResponse;
   PostCommentsResponse postCommentsResponse;
-  int page = 0;
-  int limit = 10;
+
   getAllUsers() async {
     try {
-      if (allUsersResponse.total > page * limit) {
-        allUsersResponse = await Api.api.getAllUsers(page, limit);
-        page++;
-        notifyListeners();
-      }
+      allUsersResponse = await Api.api.getAllUsers();
+
+      notifyListeners();
     } on Exception catch (e) {
       // TODO
     }

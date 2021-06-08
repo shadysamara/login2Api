@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:login_api/api_provider.dart';
 import 'package:login_api/responses/all_users_response.dart';
 import 'package:login_api/responses/user_response.dart';
+import 'package:login_api/services/api_provider.dart';
 import 'package:provider/provider.dart';
 
 class UserDetailsPage extends StatelessWidget {

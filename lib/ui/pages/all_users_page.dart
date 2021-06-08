@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:login_api/api.dart';
-import 'package:login_api/api_provider.dart';
 import 'package:login_api/responses/all_users_response.dart';
+import 'package:login_api/services/api_provider.dart';
 import 'package:login_api/ui/pages/user_details.dart';
 import 'package:login_api/ui/widgets/user_widget.dart';
 import 'package:provider/provider.dart';

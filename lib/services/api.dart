@@ -3,18 +3,32 @@ import 'package:login_api/responses/all_posts_response.dart';
 import 'package:login_api/responses/all_users_response.dart';
 import 'package:login_api/responses/post_comments_response.dart';
 import 'package:login_api/responses/post_response.dart';
+import 'package:login_api/responses/register_response.dart';
 import 'package:login_api/responses/user_response.dart';
+import 'package:login_api/services/sharedprefrences_helper.dart';
 
 class Api {
   Api._();
   static Api api = Api._();
   Dio dio = Dio();
   final String baseUrl = 'https://dummyapi.io/data/api/';
-  Options options = Options(headers: {'app-id': '60bc7a9f92040a7c1a997c1b'});
+  final String giftyUrl = 'http://gifty.aliezhome.com/api/v2/';
+  Options options = Options(headers: {
+    'app-id': '60bc7a9f92040a7c1a997c1b',
+    'Authorization': 'Bearer ${SPHelper.spHelper.getToken()}'
+  });
 
-  Future<AllUsersResponse> getAllUsers(int limit, int page) async {
-    Response response = await dio.get(baseUrl + 'user',
-        queryParameters: {'page': page, 'limit': limit}, options: options);
+  registerToApi(String email, String password, String phone) async {
+    Response response = await dio.post(
+        'https://store2cards.com/api/v1/user/register',
+        data: {'email': email});
+    RegisterResponse registerResponse =
+        RegisterResponse.fromJson(response.data);
+    SPHelper.spHelper.setToken(registerResponse.accessToken);
+  }
+
+  Future<AllUsersResponse> getAllUsers() async {
+    Response response = await dio.get(baseUrl + 'user', options: options);
     return AllUsersResponse.fromJson(response.data);
   }
 
